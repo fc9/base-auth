@@ -1,0 +1,56 @@
+{
+    "name": "fc9/auth",
+    "description": "Plugin that allows authenticate users.",
+    "keywords": [
+        "fc9",
+        "auth",
+        "authenticate"
+    ],
+    "homepage": "https://github.com/fc9/auth",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Fabio Cabral",
+            "email": "fabiocabralsantos@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "illuminate/support": "^6.0",
+        "menarasolutions/geographer-laravel": "^0.2.1",
+        "waavi/sanitizer": "^1.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fc9\\Auth\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Fc9\\Auth\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Fc9\\Auth\\Providers\\AuthServiceProvider"
+            ],
+            "aliases": {
+                "Localization": "Fc9\\Auth\\Facades\\Auth"
+            }
+        }
+    }
+}
