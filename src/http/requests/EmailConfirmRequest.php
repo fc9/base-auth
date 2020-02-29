@@ -26,7 +26,7 @@ class EmailConfirmRequest extends AbstractFormRequest
     public function filters()
     {
         return [
-            'token' => 'trim|escape|uppercase',
+            'token' => config('auth::validation.filters.token'),
         ];
     }
 
@@ -38,7 +38,7 @@ class EmailConfirmRequest extends AbstractFormRequest
     public function rules()
     {
         return [
-            'token' => 'bail|size:5|string|exists:email_confirm',
+            'token' => config('auth::validation.rules.token'),
         ];
     }
 }

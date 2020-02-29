@@ -1,17 +1,18 @@
 <?php
 
-namespace Fc9\Auth\http\Middlewares;
+namespace Fc9\Auth\Http\Middlewares;
 
 use Closure;
 use App\Http\Middleware\Authenticate as Middleware;
 use Illuminate\Support\Facades\Session;
-use Modules\Register\Entities\UserView;
+use Fc9\Auth\entities\UserView;
 
 class Authenticate extends Middleware
 {
     public function handle($request, Closure $next, ...$guards)
     {
         $this->setSessionUser($request->route('username'));
+
         $this->authenticate($request, $guards);
         return $next($request);
     }
@@ -25,8 +26,10 @@ class Authenticate extends Middleware
     {
         if ($this->auth->check()) {
             $user = $this->getAllowedUser($username);
+
             $user->himself = $user['id'] === $this->auth->user()->id;
-            $user->avatar = config('register.person.avatar.path') . $user->avatar;
+            $user->avatar = config('auth.person.avatar.path') . $user->avatar;
+
             Session::put('user', $user);
         }
     }
@@ -44,12 +47,12 @@ class Authenticate extends Middleware
         }
 
         $user = UserView::where('username', $username)->first();
-        if ($user === null || $user->access_profile === config('register.user.access_profile.superuser')) {
+        if ($user === null || $user->access_profile === config('auth.user.access_profile.superuser')) {
             return UserView::find($this->auth->user()->id);
         }
 
-        return ($this->auth->user()->access_profile !== config('register.user.access_profile.superuser') &&
-            $this->auth->user()->access_profile !== config('register.user.access_profile.admin'))
+        return ($this->auth->user()->access_profile !== config('auth.user.access_profile.superuser') &&
+            $this->auth->user()->access_profile !== config('auth.user.access_profile.admin'))
             ? UserView::find($this->auth->user()->id)
             : $user;
     }

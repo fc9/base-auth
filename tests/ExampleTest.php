@@ -3,7 +3,7 @@
 namespace Fc9\Auth\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Fc9\Auth\AuthServiceProvider;
+use Fc9\Auth\Providers\AuthServiceProvider;
 
 class ExampleTest extends TestCase
 {

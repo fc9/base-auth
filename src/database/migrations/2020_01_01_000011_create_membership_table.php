@@ -1,0 +1,49 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateMembershipTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        $config = config('auth::parameters.membership');
+        $contract_read = improve($config['contract_read']);
+        $graduate = improve($config['graduate']);
+        $status = improve($config['status']);
+        unset($config);
+
+        Schema::create('membership', function (Blueprint $table) use ($contract_read, $status, $graduate) {
+            $table->unsignedBigInteger('company_id')->index()->comment('Juridical Person Id')
+                ->nullable()->default(config('auth::parameters.membership.default_company_id'));
+            $table->unsignedBigInteger('person_id')->index()->comment('Physical Person Id');
+            $table->enum('contract_read', $contract_read->values())->default($contract_read->first());
+            $table->enum('graduate', $graduate->values())->default($graduate->first());
+            $table->enum('status', $status->values())->default($status->first());
+            $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('person')->onUpdate('cascade');
+            $table->foreign('person_id')->references('id')->on('person')->onUpdate('cascade');
+
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_general_ci';
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('membership');
+    }
+}

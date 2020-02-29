@@ -17,30 +17,16 @@
 
 Route::group(['middleware' => 'guest'], function () {
 
-    # Log In Routes
+    # Log In
     Route::get('login', 'LoginController@showLoginForm')->name('login');
     Route::post('login', 'LoginController@login');
-    Route::post('logout', 'LoginController@logout')->exchangeMiddleware('auth')->name('logout');
-    Route::get('invitation/{indicator}', 'CheckEmailController@showCheckForm');
+    Route::get('invitation/{indicator}', 'LoginController@showLoginForm');
 
-    # Log Up Routes
-    Route::group(['prefix' => 'signup', 'as' => 'signup'], function () {
-        # Step 1
-        Route::get('/', 'CheckEmailController@showCheckForm')->name('.check');
-        Route::post('/', 'CheckEmailController@check');
-        # Step 2
-        Route::get('register', 'RegisterController@showRegistrationForm')->name('.register');
-        Route::post('register', 'RegisterController@register');
-        # Step 3
-        Route::get('confirm', 'EmailConfirmController@showConfirmForm')->exchangeMiddleware('auth')->name('.confirm');
-        Route::post('confirm', 'EmailConfirmController@confirm')->exchangeMiddleware('auth');
-    });
+//    # Confirm Password
+//    Route::get('confirm/{token?}', 'ConfirmPasswordController@showConfirmForm')->name('.confirm');
+//    Route::post('confirm', 'ConfirmPasswordController@confirm');
 
-    # Confirm Password Routes
-    Route::get('confirm/{token?}', 'ConfirmPasswordController@showConfirmForm')->name('.confirm');
-    Route::post('confirm', 'ConfirmPasswordController@confirm');
-
-    # Reset Password Routes
+    # Reset Password
     Route::group(['prefix' => 'password', 'as' => 'password'], function () {
         Route::get('request', 'ForgotPasswordController@showLinkRequestForm')->name('.request');
         Route::post('email', 'ForgotPasswordController@sendResetLinkEmail')->name('.email');
@@ -48,10 +34,30 @@ Route::group(['middleware' => 'guest'], function () {
         Route::post('reset', 'ResetPasswordController@reset')->name('.update');
     });
 
+    # Log Up
+    Route::group(['prefix' => 'signup', 'as' => 'signup'], function () {
+        # Step 1
+        Route::get('/', 'CheckEmailController@showCheckForm')->name('.check');
+        Route::post('/', 'CheckEmailController@check');
+        # Step 2
+        Route::get('register', 'RegisterController@showRegistrationForm')->name('.register');
+        Route::post('register', 'RegisterController@register');
+    });
+
 });
 
-Route::group(['prefix' => 'signup', 'as' => 'signup', 'middleware' => 'auth',], function () {
+Route::group(['middleware' => 'auth'], function () {
+
     # Step 3
-    Route::get('confirm', 'EmailConfirmController@showConfirmForm')->name('.confirm');
-    Route::post('confirm', 'EmailConfirmController@confirm');
+    Route::get('confirm', 'EmailConfirmController@showConfirmForm')->middleware('auth')->name('.confirm');
+    Route::post('confirm', 'EmailConfirmController@confirm')->middleware('auth');
+
+    Route::post('logout', 'LoginController@logout')->name('logout');
+
 });
+
+//Route::group(['prefix' => 'signup', 'as' => 'signup', 'middleware' => 'auth',], function () {
+//    # Step 3
+//    Route::get('confirm', 'EmailConfirmController@showConfirmForm')->name('.confirm');
+//    Route::post('confirm', 'EmailConfirmController@confirm');
+//});

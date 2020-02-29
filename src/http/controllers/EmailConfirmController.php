@@ -16,14 +16,14 @@ class EmailConfirmController extends Controller
 
     public function showConfirmForm()
     {
-        \Fc9\Auth\Entities\EmailConfirm::sendToken(auth()->user()->email);
+        \Fc9\Auth\entities\PasswordReset::sendToken(auth()->user()->email);
 
         return View::make('auth.confirm_email', ['step' => 3, 'email' => auth()->user()->email]);
     }
 
     public function confirm(\Fc9\Auth\Http\Requests\EmailConfirmRequest $request)
     {
-        \Fc9\Auth\Entities\EmailConfirm::destroy(auth()->user()->email);
+        \Fc9\Auth\entities\PasswordReset::destroy(auth()->user()->email);
 
         $user = auth()->user();
         $user->email_verified_at = date('Y-m-d H:i:s');

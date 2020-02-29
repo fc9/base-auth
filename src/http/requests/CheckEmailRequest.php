@@ -3,7 +3,6 @@
 namespace Fc9\Auth\Http\Requests;
 
 use Waavi\Sanitizer\Laravel\SanitizesInput;
-use Fc9\Auth\Rules\Qualified;
 
 class CheckEmailRequest extends AbstractFormRequest
 {
@@ -27,8 +26,8 @@ class CheckEmailRequest extends AbstractFormRequest
     public function filters()
     {
         return [
-            'indicator' => 'trim|capitalize|escape|lowercase',
-            'email' => 'trim|lowercase',
+            'indicator' => config('auth::validation.filters.indicator'),
+            'email' => config('auth::validation.filters.email'),
         ];
     }
 
@@ -39,11 +38,14 @@ class CheckEmailRequest extends AbstractFormRequest
      */
     public function rules()
     {
-        $pattern = config('register.pattern.username');
+        $indicator_rules = explode('|', config('auth::validation.rules.indicator_check'));
+        $indicator_rules[] = new \Fc9\Auth\Rules\Qualified;
+        //$pattern = config('auth::validation.pattern.username');
 
         return [
-            'indicator' => ['bail', 'required', 'min:5', 'max:18', 'regex:' . $pattern, new Qualified()],
-            'email' => 'bail|required|max:90|email|unique:user',
+            'indicator' => $indicator_rules,
+            //'indicator' => ['bail', 'required', 'min:5', 'max:16', 'regex:' . $pattern, new Qualified()],
+            'email' => config('auth::validation.rules.email'),
         ];
     }
 }

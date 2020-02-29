@@ -18,4 +18,5 @@ class Auth extends Facade
     {
         return 'auth';
     }
+
 }

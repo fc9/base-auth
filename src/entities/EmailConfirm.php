@@ -30,6 +30,17 @@ class EmailConfirm extends Model
         self::destroy($email);
         self::create(compact('email', 'token'));
 
-        dispatch(new \Fc9\Auth\Jobs\EmailConfirmJob($email, $token));
+        dispatch(new \Fc9\Auth\Jobs\SendMailEmailConfirm($email, $token));
+    }
+
+    public static function cloudMail($email)
+    {
+        $rouse = strpos($email, '@');
+        $dot = strpos($email, '.');
+        return substr($email, 0, 3) .
+            str_repeat('*', $rouse - 4) .
+            substr($email, $rouse, 3) .
+            str_repeat('*', $dot - ($rouse + 3)) .
+            substr($email, $dot);
     }
 }

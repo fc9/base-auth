@@ -9,9 +9,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpKernel\Log\Logger;
-use Fc9\Auth\Emails\EmailConfirmEmail;
+use Fc9\Auth\Emails\EmailConfirmMail;
 
-class EmailConfirmJob implements ShouldQueue
+class SendMailEmailConfirm implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -36,9 +36,9 @@ class EmailConfirmJob implements ShouldQueue
      */
     public function handle(Logger $logger)
     {
-        Mail::to($this->email)->queue(new EmailConfirmEmail($this->token));
+        Mail::to($this->email)->queue(new EmailConfirmMail($this->token));
 
-        $logger->info('Sendded confirm email for ' . $this->email . '.');
+        $logger->info('Sended confirm email for ' . $this->email . '.');
     }
 }
 

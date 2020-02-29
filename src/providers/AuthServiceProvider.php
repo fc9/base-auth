@@ -3,9 +3,9 @@
 namespace Fc9\Auth\Providers;
 
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
-use Fc9\Auth\http\Middlewares\Authenticate;
-use Fc9\Auth\Authentication;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerMiddleware();
         $this->registerBladeDirectives();
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadSeeds();
     }
 
     /**
@@ -28,12 +29,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         $this->app->register(RouteServiceProvider::class);
 
-        // Register the main class to use with the facade
         $this->app->singleton('authentication', function () {
-            return new Authentication();
+            return new \Fc9\Auth\Authentication();
         });
     }
 
@@ -60,9 +59,13 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected function registerConfig()
     {
-        $this->publishes([__DIR__ . '/../config/config.php' => config_path('auth.php'),], 'Config');
+        $this->publishes([__DIR__ . '/../config/auth.php' => config_path('auth.php'),], 'Config');
+        config(['auth.providers.users.model' => 'Fc9\\Auth\\Entities\\User::class']);
+        config(['auth.passwords.users.table' => 'password_reset']);
 
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'auth');
+        $this->mergeConfigFrom(__DIR__ . '/../config/auth.php', 'auth');
+        $this->mergeConfigFrom(__DIR__ . '/../config/parameters.php', 'auth::parameters');
+        $this->mergeConfigFrom(__DIR__ . '/../config/validation.php', 'auth::validation');
     }
 
     /**
@@ -104,6 +107,12 @@ class AuthServiceProvider extends ServiceProvider
         }
     }
 
+    public function registerMiddleware()
+    {
+        $router = $this->app['router'];
+        $router->aliasMiddleware('auth', \Fc9\Auth\Http\Middlewares\Authenticate::class);
+    }
+
     /**
      * Register additional directives of Blade.
      *
@@ -123,9 +132,16 @@ class AuthServiceProvider extends ServiceProvider
         return [];
     }
 
-    public function registerMiddleware()
+    public function loadSeeds()
     {
-        $router = $this->app['router'];
-        $router->aliasMiddleware('auth', Authenticate::class);
+        if ($this->app->runningInConsole()) {
+            $command = Request::server('argv', null);
+            if (is_array($command)) {
+                $command = implode(' ', $command);
+                if ($command == "artisan db:seed") {
+                    Artisan::call('db:seed', ['--class' => \Fc9\Auth\Database\Seeders\DatabaseSeeder::class]);
+                }
+            }
+        }
     }
 }

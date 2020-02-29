@@ -26,8 +26,8 @@ class LoginRequest extends AbstractFormRequest
     public function filters()
     {
         return [
-            'username' => 'trim|escape|lowercase',
-            'password' => 'trim',
+            'username' => config('auth::validation.filters.username'),
+            'password' => config('auth::validation.filters.password'),
         ];
     }
 
@@ -39,8 +39,8 @@ class LoginRequest extends AbstractFormRequest
     public function rules()
     {
         return [
-            'username' => 'bail|required|min:5|max:18|string|exists:user',
-            'password' => 'bail|required|min:8|max:24|string',
+            'username' => config('auth::validation.rules.username_login'),
+            'password' => config('auth::validation.rules.password'),
         ];
     }
 }
