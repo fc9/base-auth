@@ -45,7 +45,10 @@ class CheckEmailRequest extends AbstractFormRequest
         return [
             'indicator' => $indicator_rules,
             //'indicator' => ['bail', 'required', 'min:5', 'max:16', 'regex:' . $pattern, new Qualified()],
+<<<<<<< HEAD
             'agree_to_terms' => config('auth::validation.rules.agree_to_terms'),
+=======
+>>>>>>> b8e2c823efe0dba6ba5da102ca26ea3adc11bc05
             'email' => config('auth::validation.rules.email'),
         ];
     }

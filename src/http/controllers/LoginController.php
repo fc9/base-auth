@@ -22,7 +22,6 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-
     public function login(LoginRequest $request)
     {
         $credentials = $request->only('username',
@@ -43,7 +42,6 @@ class LoginController extends Controller
             ->withInput($request->only('username', 'remember'))
             ->withErrors(['username' => __('auth.failed'),]);
     }
-
 
     public function logout()
     {

@@ -15,7 +15,11 @@ class PersonTableSeeder extends Seeder
     public function run()
     {
         $type = improve(config('auth::parameters.person.type'));
+<<<<<<< HEAD
         $datedIn = date('Y/m/d H:i:s');
+=======
+        $createdIn = date('Y/m/d H:i:s');
+>>>>>>> b8e2c823efe0dba6ba5da102ca26ea3adc11bc05
 
         Person::insert([
 //            [
@@ -25,8 +29,12 @@ class PersonTableSeeder extends Seeder
 //                'last_name' => 'Marketing Network',
 //                'birth_date' => null,
 //                'type' => $type->juridical,
+<<<<<<< HEAD
 //                'created_at' => $datedIn,
 //                'updated_at' => $datedIn,
+=======
+//                'created_at' => $createdIn,
+>>>>>>> b8e2c823efe0dba6ba5da102ca26ea3adc11bc05
 //            ],
 
 //            [
@@ -36,8 +44,12 @@ class PersonTableSeeder extends Seeder
 //                'last_name' => 'ADM',
 //                'birth_date' => null,
 //                'type' => $type->juridical,
+<<<<<<< HEAD
 //                'created_at' => $datedIn,
 //                'updated_at' => $datedIn,
+=======
+//                'created_at' => $createdIn,
+>>>>>>> b8e2c823efe0dba6ba5da102ca26ea3adc11bc05
 //            ],
 
             [
@@ -47,8 +59,12 @@ class PersonTableSeeder extends Seeder
                 'last_name' => 'Foundation',
                 'birth_date' => null,
                 'type' => $type->juridical,
+<<<<<<< HEAD
                 'created_at' => $datedIn,
                 'updated_at' => $datedIn,
+=======
+                'created_at' => $createdIn,
+>>>>>>> b8e2c823efe0dba6ba5da102ca26ea3adc11bc05
             ],
 
             [
@@ -59,8 +75,12 @@ class PersonTableSeeder extends Seeder
                 //'birth_date' => date('Y/m/d H:i:s', strtotime('-18 years')),
                 'birth_date' => \Faker\Provider\DateTime::date('Y/m/d H:i:s', '-18 years'),
                 'type' => $type->artificial,
+<<<<<<< HEAD
                 'created_at' => $datedIn,
                 'updated_at' => $datedIn,
+=======
+                'created_at' => $createdIn,
+>>>>>>> b8e2c823efe0dba6ba5da102ca26ea3adc11bc05
             ],
         ]);
 

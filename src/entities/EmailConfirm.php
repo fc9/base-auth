@@ -3,7 +3,6 @@
 namespace Fc9\Auth\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class EmailConfirm extends Model
