@@ -2,10 +2,10 @@
 
 namespace Fc9\Auth\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Fc9\Api\Http\FormRequest;
 use Waavi\Sanitizer\Laravel\SanitizesInput;
 
-abstract class AbstractFormRequest extends FormRequest
+abstract class AbstractApiFormRequest extends FormRequest
 {
     use SanitizesInput;
 

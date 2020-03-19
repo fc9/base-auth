@@ -89,16 +89,6 @@ return [
         'title' => '',
         'token' => 'bail|size:60|string|exists:email_confirm',
         'username' => 'bail|required|min:4|max:16|string|regex:/^(?![_.])(?!.*[_.]{2})[a-z0-9._]+(?<![_.])$/|exists:user',
-//        'username' => [
-//            'bail',
-//            'required',
-//            'min:4',
-//            'max:16',
-//            'string',
-//            'regex:/^(?![_.]|.*[_.]{2})[a-z0-9._]+(?<![_.])$/',
-//            'exists:user'
-//        ],
-        /* TODO: aplicar as regras do pattern com os metodos nativos do Laravel Validation. */
         'year' => '',
         'zip_code' => 'max:16',
     ],

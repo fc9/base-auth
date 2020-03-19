@@ -2,12 +2,12 @@
 
 namespace Fc9\Auth\Http\Requests;
 
-class RegisterRequest extends AbstractFormRequest
+class UsersRequest extends AbstractApiFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @return bool
+     * @inheritDoc
      */
     public function authorize()
     {
@@ -15,9 +15,7 @@ class RegisterRequest extends AbstractFormRequest
     }
 
     /**
-     *  Filters to be applied to the input.
-     *
-     * @return array
+     * @inheritDoc
      */
     public function filters()
     {
@@ -36,9 +34,7 @@ class RegisterRequest extends AbstractFormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
+     * @inheritDoc
      */
     public function rules()
     {

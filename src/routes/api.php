@@ -10,16 +10,16 @@ $route = app('Fc9\Api\Routing\Router');
 
 $route->version('v1', ['namespace' => '\Fc9\Auth\Http\Controllers\Api'], function ($route) {
 
-    $route->get('version', 'ApiController@version');
+    $route->get('version', 'ApiController@version')->name('version');;
 
-    //$route->group(['prefix' => 'users'], function ($route) {
-        $route->get('users', 'UsersController@index');
-        $route->post('users', 'UsersController@store');
-        $route->get('user/{uuid}', 'UsersController@show');
-        $route->put('user/{uuid}', 'UsersController@update');
-        $route->delete('user/{uuid}', 'UsersController@destroy');
+    $route->group(['prefix' => 'users', 'as' => 'users'], function ($route) {
+        $route->get('', 'UsersController@index')->name('.index');
+        $route->post('', 'UsersController@store')->name('.store');
+        $route->get('/{uuid}', 'UsersController@show')->name('.show');
+        $route->put('/{uuid}', 'UsersController@update')->name('.update');
+        $route->delete('/{uuid}', 'UsersController@destroy')->name('.destroy');
         //$route->resource('users', 'UsersController', ['except' => ['create', 'edit']]);
-    //});
+    });
 
 });
 
