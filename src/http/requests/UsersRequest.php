@@ -2,7 +2,7 @@
 
 namespace Fc9\Auth\Http\Requests;
 
-class UsersRequest extends AbstractApiFormRequest
+class UsersRequest extends AbstractFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class UsersRequest extends AbstractApiFormRequest
         return [
             'indicator' => $filters['indicator'],
             'email' => $filters['email'],
-            'first_name' => $filters['first_name'],
+//            'first_name' => $filters['first_name'],
             'last_name' => $filters['last_name'],
             'username' => $filters['username'],
             'password' => $filters['password'],
@@ -41,14 +41,14 @@ class UsersRequest extends AbstractApiFormRequest
         $rules = config('auth::validation.rules');
 
         return [
-            'indicator' => explode('|', $rules['indicator_register']) + [10 => new \Fc9\Auth\Rules\Qualified], //TODO: serializar
+            //'indicator' => explode('|', $rules['indicator']) + [10 => new \Fc9\Auth\Rules\Qualified], //TODO: serializar
             'email' => $rules['email'],
             'first_name' => $rules['first_name'],
             'last_name' => $rules['last_name'],
-            'username' => $rules['username_register'],
+            'username' => $rules['username'],
             'password' => $rules['password'],
-            'country' => $rules['country_code'],
-            'phone' => $rules['phone'],
+            'country' => $rules['country'],
+            //'phone' => $rules['phone'],
         ];
     }
 }

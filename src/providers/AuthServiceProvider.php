@@ -81,7 +81,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/packages/auth');
+        $langPath = resource_path('lang/vendor/auth');
 
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'auth');

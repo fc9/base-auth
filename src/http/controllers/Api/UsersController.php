@@ -28,7 +28,7 @@ class UsersController extends Controller
      * @param \Fc9\Auth\Http\Requests\UsersRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(LoginRequest $request)
+    public function store(UsersRequest $request)
     {
         return response()->json(['data' => $request->all()]);
     }

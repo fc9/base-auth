@@ -2,12 +2,8 @@
 
 namespace Fc9\Auth\Http\Requests;
 
-use Waavi\Sanitizer\Laravel\SanitizesInput;
-
 class LoginRequest extends AbstractFormRequest
 {
-    use SanitizesInput;
-
     /**
      * Determine if the user is authorized to make this request.
      *

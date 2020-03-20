@@ -38,4 +38,9 @@ abstract class AbstractFormRequest extends FormRequest
             parent::validateResolved();
         }
     }
+
+    public function messages()
+    {
+        return array_supermerge( __('lang::validation'), __('auth::validation'));
+    }
 }
